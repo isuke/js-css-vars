@@ -1,0 +1,14 @@
+:chapter-label:
+:icons: font
+:lang: en
+:sectanchors:
+:sectnums:
+:sectnumlevels: 2
+:source-highlighter: highlightjs
+:toc:
+:toclevels: 2
+
+:author: isuke
+:email: isuke770@gmail.com
+
+= js-css-vars

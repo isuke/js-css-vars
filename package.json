@@ -1,0 +1,9 @@
+{
+  "name": "js-css-vars",
+  "version": "0.0.1",
+  "description": "Share variables with JavaScript and CSS.",
+  "main": "index.js",
+  "author": "isuke",
+  "license": "MIT",
+  "private": false
+}
