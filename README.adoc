@@ -11,4 +11,4 @@
 :author: isuke
 :email: isuke770@gmail.com
 
-= js-css-vars
+= js-css-vars image:https://travis-ci.org/isuke/js-css-vars.svg?branch=master["Build Status", link="https://travis-ci.org/isuke/js-css-vars"]
