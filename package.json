@@ -9,8 +9,8 @@
   "private": false,
   "scripts": {
     "build": "webpack --mode=production --progress --hide-modules",
-    "lint": "eslint webpack.config.js index.js",
-    "fix": "eslint --fix webpack.config.js index.js"
+    "lint": "eslint webpack.config.js index.js lib/**/*.js",
+    "fix": "eslint --fix webpack.config.js index.js lib/**/*.js"
   },
   "dependencies": {
     "lodash.kebabcase": "^4.1.1"
