@@ -9,14 +9,16 @@
   "private": false,
   "scripts": {
     "build": "webpack --mode=production --progress --hide-modules",
-    "lint": "eslint webpack.config.js index.js lib/**/*.js",
-    "fix": "eslint --fix webpack.config.js index.js lib/**/*.js"
+    "lint": "eslint webpack.config.js index.js lib/**/*.js test/**/*.js",
+    "fix": "eslint --fix webpack.config.js index.js lib/**/*.js test/**/*.js",
+    "test": "ava --verbose"
   },
   "dependencies": {
     "lodash.foreach": "^4.5.0",
     "lodash.kebabcase": "^4.1.1"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "eslint": "^5.7.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
