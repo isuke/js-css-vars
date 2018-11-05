@@ -147,7 +147,7 @@ test('.fullCssVars', (t) => {
   }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
-  const expected = { 'main-style__day__bg-color': 'pink', 'main-style__day__ft-color': 'black' }
+  const expected = { '--main-style__day__bg-color': 'pink', '--main-style__day__ft-color': 'black' }
 
   t.deepEqual(structuredVar.fullCssVars, expected)
 })
@@ -169,7 +169,7 @@ test('.putValue with correct var name', (t) => {
 
   const result = structuredVar.putValue(value)
   t.is(result, value)
-  t.true(setPropertySpy.withArgs('main-style__day__bg-color', value).calledOnce)
+  t.true(setPropertySpy.withArgs('--main-style__day__bg-color', value).calledOnce)
 })
 
 test('.putValue with not exist var name', (t) => {
