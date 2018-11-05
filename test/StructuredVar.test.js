@@ -2,37 +2,37 @@ const test = require('ava')
 
 const StructuredVar = require('../lib/StructuredVar')
 
-test('.getOriginalVarNames', (t) => {
+test('.originalVarNames', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = { cssText: `` }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
   const expected = ['mainStyle', 'day']
 
-  t.deepEqual(structuredVar.getOriginalVarNames(), expected)
+  t.deepEqual(structuredVar.originalVarNames, expected)
 })
 
-test('.getOriginalJsVarName', (t) => {
+test('.originalJsVarName', (t) => {
   const partOfJsVarName = 'main-style.day'
   const documentStyle = { cssText: `` }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
   const expected = 'mainStyle.day'
 
-  t.deepEqual(structuredVar.getOriginalJsVarName(), expected)
+  t.deepEqual(structuredVar.originalJsVarName, expected)
 })
 
-test('.getOriginalCssVarName', (t) => {
+test('.originalCssVarName', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = { cssText: `` }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
   const expected = '--main-style__day'
 
-  t.deepEqual(structuredVar.getOriginalCssVarName(), expected)
+  t.deepEqual(structuredVar.originalCssVarName, expected)
 })
 
-test('.getTailVarObject', (t) => {
+test('.tailVarObject', (t) => {
   const partOfJsVarName = 'mainStyle'
   const documentStyle = {
     cssText: `
@@ -46,10 +46,10 @@ test('.getTailVarObject', (t) => {
 
   const expected = { day: { bgColor: 'pink', ftColor: 'black' }, night: { bgColor: 'black', ftColor: 'white' } }
 
-  t.deepEqual(structuredVar.getTailVarObject(), expected)
+  t.deepEqual(structuredVar.tailVarObject, expected)
 })
 
-test('.getFullVarObject', (t) => {
+test('.fullVarObject', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = {
     cssText: `
@@ -63,10 +63,10 @@ test('.getFullVarObject', (t) => {
 
   const expected = { mainStyle: { day: { bgColor: 'pink', ftColor: 'black' } } }
 
-  t.deepEqual(structuredVar.getFullVarObject(), expected)
+  t.deepEqual(structuredVar.fullVarObject, expected)
 })
 
-test('.getFullJsVars', (t) => {
+test('.fullJsVars', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = {
     cssText: `
@@ -80,10 +80,10 @@ test('.getFullJsVars', (t) => {
 
   const expected = { 'mainStyle.day.bgColor': 'pink', 'mainStyle.day.ftColor': 'black' }
 
-  t.deepEqual(structuredVar.getFullJsVars(), expected)
+  t.deepEqual(structuredVar.fullJsVars, expected)
 })
 
-test('.getFullCssVars', (t) => {
+test('.fullCssVars', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = {
     cssText: `
@@ -97,5 +97,5 @@ test('.getFullCssVars', (t) => {
 
   const expected = { 'main-style__day__bg-color': 'pink', 'main-style__day__ft-color': 'black' }
 
-  t.deepEqual(structuredVar.getFullCssVars(), expected)
+  t.deepEqual(structuredVar.fullCssVars, expected)
 })
