@@ -1,4 +1,5 @@
 const test = require('ava')
+const sinon = require('sinon')
 
 const StructuredVar = require('../lib/StructuredVar')
 
@@ -149,4 +150,58 @@ test('.fullCssVars', (t) => {
   const expected = { 'main-style__day__bg-color': 'pink', 'main-style__day__ft-color': 'black' }
 
   t.deepEqual(structuredVar.fullCssVars, expected)
+})
+
+test('.putValue with correct var name', (t) => {
+  const partOfJsVarName = 'mainStyle.day.bgColor'
+  const setPropertySpy = sinon.spy()
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+    setProperty: setPropertySpy,
+  }
+  const value = 'red'
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const result = structuredVar.putValue(value)
+  t.is(result, value)
+  t.true(setPropertySpy.withArgs('main-style__day__bg-color', value).calledOnce)
+})
+
+test('.putValue with not exist var name', (t) => {
+  const partOfJsVarName = 'foo.bar'
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+  }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  t.throws(() => {
+    structuredVar.putValue(undefined)
+  }, "'--foo__bar' is not found.")
+})
+
+test('.putValue with a ambiguous var name', (t) => {
+  const partOfJsVarName = 'mainStyle'
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+  }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  t.throws(() => {
+    structuredVar.putValue(undefined)
+  }, "'--main-style' is ambiguous.")
 })
