@@ -32,7 +32,7 @@ test('.originalCssVarName', (t) => {
   t.deepEqual(structuredVar.originalCssVarName, expected)
 })
 
-test('.tailVarObject', (t) => {
+test('.tailVarObject with part of var name', (t) => {
   const partOfJsVarName = 'mainStyle'
   const documentStyle = {
     cssText: `
@@ -49,7 +49,24 @@ test('.tailVarObject', (t) => {
   t.deepEqual(structuredVar.tailVarObject, expected)
 })
 
-test('.fullVarObject', (t) => {
+test('.tailVarObject with full var name', (t) => {
+  const partOfJsVarName = 'mainStyle.day.bgColor'
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+  }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const expected = { '': 'pink' }
+
+  t.deepEqual(structuredVar.tailVarObject, expected)
+})
+
+test('.fullVarObject with part of var name', (t) => {
   const partOfJsVarName = 'mainStyle.day'
   const documentStyle = {
     cssText: `
@@ -62,6 +79,40 @@ test('.fullVarObject', (t) => {
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
   const expected = { mainStyle: { day: { bgColor: 'pink', ftColor: 'black' } } }
+
+  t.deepEqual(structuredVar.fullVarObject, expected)
+})
+
+test('.fullVarObject with full var name', (t) => {
+  const partOfJsVarName = 'mainStyle.day.bgColor'
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+  }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const expected = { mainStyle: { day: { bgColor: 'pink' } } }
+
+  t.deepEqual(structuredVar.fullVarObject, expected)
+})
+
+test('.fullVarObject with not exist var name', (t) => {
+  const partOfJsVarName = 'mainStyle.foo'
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+  }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const expected = {}
 
   t.deepEqual(structuredVar.fullVarObject, expected)
 })
