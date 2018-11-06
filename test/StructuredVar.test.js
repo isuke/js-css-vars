@@ -205,3 +205,25 @@ test('.putValue with a ambiguous var name', (t) => {
     structuredVar.putValue(undefined)
   }, "'--main-style' is ambiguous.")
 })
+
+test('.putObject', (t) => {
+  const partOfJsVarName = 'mainStyle.day'
+  const setPropertySpy = sinon.spy()
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+  `,
+    setProperty: setPropertySpy,
+  }
+  const value = { bgColor: 'red', ftColor: 'blue', other: '10px' }
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const result = structuredVar.putObject(value)
+  t.is(result, value)
+  t.true(setPropertySpy.withArgs('--main-style__day__bg-color', 'red').calledOnce)
+  t.true(setPropertySpy.withArgs('--main-style__day__ft-color', 'blue').calledOnce)
+  t.true(setPropertySpy.withArgs('--main-style__day__other', '10px').calledOnce)
+})
