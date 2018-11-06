@@ -227,3 +227,52 @@ test('.putObject', (t) => {
   t.true(setPropertySpy.withArgs('--main-style__day__ft-color', 'blue').calledOnce)
   t.true(setPropertySpy.withArgs('--main-style__day__other', '10px').calledOnce)
 })
+
+test('.putVar', (t) => {
+  const partOfJsVarName = 'mainStyle.current.bgColor'
+  const setPropertySpy = sinon.spy()
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+
+      --main-style__current__bg-color: var(--main-style__day__bg-color);
+      --main-style__current__ft-color: var(--main-style__day__ft-color);
+  `,
+    setProperty: setPropertySpy,
+  }
+  const jsVarName = 'mainStyle.night.bgColor'
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const result = structuredVar.putVar(jsVarName)
+  t.deepEqual(result, 'black')
+  t.true(setPropertySpy.withArgs('--main-style__current__bg-color', 'var(--main-style__night__bg-color)').calledOnce)
+})
+
+test('.putVars', (t) => {
+  const partOfJsVarName = 'mainStyle.current'
+  const setPropertySpy = sinon.spy()
+  const documentStyle = {
+    cssText: `
+      --main-style__day__bg-color: pink;
+      --main-style__day__ft-color: black;
+      --main-style__night__bg-color: black;
+      --main-style__night__ft-color: white;
+      --main-style__night__other: 10px;
+
+      --main-style__current__bg-color: var(--main-style__day__bg-color);
+      --main-style__current__ft-color: var(--main-style__day__ft-color);
+  `,
+    setProperty: setPropertySpy,
+  }
+  const jsVarName = 'mainStyle.night'
+  const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
+
+  const result = structuredVar.putVars(jsVarName)
+  t.deepEqual(result, { bgColor: 'black', ftColor: 'white', other: '10px' })
+  t.true(setPropertySpy.withArgs('--main-style__current__bg-color', 'var(--main-style__night__bg-color)').calledOnce)
+  t.true(setPropertySpy.withArgs('--main-style__current__ft-color', 'var(--main-style__night__ft-color)').calledOnce)
+  t.true(setPropertySpy.withArgs('--main-style__current__other', 'var(--main-style__night__other)').calledOnce)
+})
