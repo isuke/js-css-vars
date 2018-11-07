@@ -12,3 +12,5 @@
 :email: isuke770@gmail.com
 
 = js-css-vars image:https://travis-ci.org/isuke/js-css-vars.svg?branch=master["Build Status", link="https://travis-ci.org/isuke/js-css-vars"]
+
+Share variables with JavaScript and CSS.
