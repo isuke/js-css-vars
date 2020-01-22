@@ -184,9 +184,12 @@ test('.putValue with not exist var name', (t) => {
   }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
-  t.throws(() => {
-    structuredVar.putValue(undefined)
-  }, "'--foo__bar' is not found.")
+  t.throws(
+    () => {
+      structuredVar.putValue(undefined)
+    },
+    { message: "'--foo__bar' is not found." }
+  )
 })
 
 test('.putValue with a ambiguous var name', (t) => {
@@ -201,9 +204,12 @@ test('.putValue with a ambiguous var name', (t) => {
   }
   const structuredVar = new StructuredVar(partOfJsVarName, documentStyle)
 
-  t.throws(() => {
-    structuredVar.putValue(undefined)
-  }, "'--main-style' is ambiguous.")
+  t.throws(
+    () => {
+      structuredVar.putValue(undefined)
+    },
+    { message: "'--main-style' is ambiguous." }
+  )
 })
 
 test('.putObject', (t) => {
