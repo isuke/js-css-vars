@@ -14,10 +14,10 @@
     "test": "ava --verbose"
   },
   "dependencies": {
-    "lodash.camelcase": "^4.3.0",
-    "lodash.foreach": "^4.5.0",
-    "lodash.kebabcase": "^4.1.1",
-    "lodash.merge": "^4.6.1"
+    "lodash.camelcase": "4.3.0",
+    "lodash.foreach": "4.5.0",
+    "lodash.kebabcase": "4.1.1",
+    "lodash.merge": "4.6.2"
   },
   "devDependencies": {
     "ava": "3.0.x",
